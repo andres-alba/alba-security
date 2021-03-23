@@ -5,11 +5,7 @@ import 'dart:async';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'login_screen.dart';
 import 'package:alba_security/components/alert_message.dart';
-
-final _firestore = FirebaseFirestore.instance;
-User loggedInUser;
 
 class ScanScreen extends StatefulWidget {
   static const String id = 'scan_screen';
@@ -29,10 +25,7 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   void initState() {
     super.initState();
-
     print(_auth.currentUser);
-
-    //getCurrentUser();
   }
 
   String result = "Hey there !";
@@ -98,22 +91,6 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                _auth.signOut();
-                Navigator.pushNamed(context, LoginScreen.id);
-              }),
-        ],
-        title: Text(
-          'Welcome ${_auth.currentUser.email}!',
-          style: TextStyle(
-            fontSize: 15.0,
-          ),
-        ),
-      ),
       body: Column(
         children: [
           SizedBox(height: 20.0),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "946936313405",
+    "project_id": "alba-security",
+    "storage_bucket": "alba-security.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946936313405:android:d0b63ad821f1672cdc9c54",
+        "android_client_info": {
+          "package_name": "org.andresalba.alba_security"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946936313405-fqfbfgdm6n6n006jeto9ghrh4v0i1jp1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUGgCORWWkx9rNuglW0GPzNVvkV1wH_o4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946936313405-fqfbfgdm6n6n006jeto9ghrh4v0i1jp1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

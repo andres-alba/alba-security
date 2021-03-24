@@ -3,10 +3,9 @@ import 'package:alba_security/screens/welcome_screen.dart';
 import 'package:alba_security/screens/login_screen.dart';
 import 'package:alba_security/screens/registration_screen.dart';
 import 'package:alba_security/screens/scan_screen.dart';
-import 'package:provider/provider.dart';
 import 'package:alba_security/screens/home.dart';
+import 'package:alba_security/screens/admin_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:alba_security/models/user_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +26,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         ScanScreen.id: (context) => ScanScreen(),
+        AdminScreen.id: (context) => AdminScreen(),
       },
     );
   }

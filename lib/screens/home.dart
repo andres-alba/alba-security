@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'login_screen.dart';
 import 'profile_screen.dart';
 import 'scan_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'admin_screen.dart';
 
-User loggedInUser;
 int index = 0;
 
 class HomeScreen extends StatefulWidget {
@@ -16,6 +16,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+
+  User user;
 
   //bottom nav stuff
   PageController _pageController = PageController();
@@ -38,58 +41,42 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  _auth.signOut();
-                  Navigator.pushNamed(context, LoginScreen.id);
-                }),
-          ],
-          title: Text(
-            'Welcome ${_auth.currentUser.email}!',
-            style: TextStyle(
-              fontSize: 15.0,
-            ),
+      appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                _auth.signOut();
+                Navigator.pushNamed(context, LoginScreen.id);
+              }),
+        ],
+        title: Text(
+          'Welcome ${_auth.currentUser.email}!',
+          style: TextStyle(
+            fontSize: 15.0,
           ),
         ),
-        body: PageView(
-          onPageChanged: _onPageChanged,
-          controller: _pageController,
-          children: _screens,
-          physics: NeverScrollableScrollPhysics(),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: _onItemTapped,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: _selectedIndex == 0 ? Colors.blue : Colors.grey,
-              ),
-              title: Text(
-                'Scan',
-                style: TextStyle(
-                  color: _selectedIndex == 0 ? Colors.blue : Colors.grey,
-                ),
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.verified_user,
-                color: _selectedIndex == 1 ? Colors.blue : Colors.grey,
-              ),
-              title: Text(
-                'Profile',
-                style: TextStyle(
-                  color: _selectedIndex == 1 ? Colors.blue : Colors.grey,
-                ),
-              ),
-            ),
-          ],
-        ));
+      ),
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: _firestore
+            .collection('users')
+            .doc(_auth.currentUser.uid)
+            .snapshots(),
+        builder: (BuildContext context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: LinearProgressIndicator());
+          }
+          final userData = snapshot.data.data();
+          print(userData);
+          if (userData['role'] == 'admin') {
+            return AdminScreen();
+          }
+          return ScanScreen();
+        },
+      ),
+    );
   }
 }

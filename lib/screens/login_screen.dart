@@ -4,8 +4,8 @@ import 'package:alba_security/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:alba_security/screens/home.dart';
-import 'package:alba_security/models/user_repository.dart';
-import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:alba_security/screens/admin_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -15,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailTextController = TextEditingController();
+  TextEditingController passwordTextController = TextEditingController();
   bool showSpinner = false;
   final _auth = FirebaseAuth.instance;
 
@@ -56,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 8.0,
               ),
               TextField(
+                  controller: passwordTextController,
                   textAlign: TextAlign.center,
                   obscureText: true,
                   onChanged: (value) {
@@ -84,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       showSpinner = false;
                     });
                     emailTextController.clear();
+                    passwordTextController.clear();
                   } catch (e) {
                     print(e);
                   }

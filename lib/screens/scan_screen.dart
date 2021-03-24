@@ -6,6 +6,8 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:alba_security/components/alert_message.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 
 class ScanScreen extends StatefulWidget {
   static const String id = 'scan_screen';
@@ -19,13 +21,43 @@ class _ScanScreenState extends State<ScanScreen> {
   String timeFormat;
   List scannedLocation = [];
   bool scannedOnTime = false;
-
   int selectedValue = 1;
+
+  // Geolocator points
+  String latitude = "";
+  String longitude = "";
+  String address = "";
 
   @override
   void initState() {
     super.initState();
-    print(_auth.currentUser);
+  }
+
+  // Get current location
+  getCurrentLocation() async {
+    try {
+      final position = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+      setState(() {
+        latitude = '${position.latitude}';
+        longitude = '${position.longitude}';
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getAddressBasedOnLocation() async {
+    final coordinates =
+        new Coordinates(double.parse(latitude), double.parse(longitude));
+    print('COORDINATESSSSSSSSSS: $coordinates');
+
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    setState(() {
+      address = addresses.first.addressLine;
+    });
   }
 
   String result = "Hey there !";
@@ -33,31 +65,33 @@ class _ScanScreenState extends State<ScanScreen> {
   String locationOneWalkTimeOne = '02:00 AM';
   String locationOneWalkTimeTwo = '02:10 AM';
 
+  // QR Scan
   Future _scanQR() async {
     try {
+      // QR data
       String qrResult = await BarcodeScanner.scan();
+
+      // String location to be outputted onto screen
       String locationOneTime;
+
+      // Current date and time
       final now = DateTime.now();
       timeFormat = DateFormat('hh:mm a').format(now);
-      print('xxxxxxxxxxxxxxXXXXXXXXXXXXXXX');
-      //final nowTime = timeFormat.parseStrict(now.toString());
-      //print(nowTime);
 
       final locationOne = "09:02 PM";
-      print('resulttttttt: $result');
-      print('resulttttttt: $timeFormat');
+      getCurrentLocation();
+      getAddressBasedOnLocation();
       if (result == 'Location # 1' && locationOne == timeFormat) {
         locationOneTime = "Location found at $locationOne";
         scannedOnTime = true;
       } else {
-        locationOneTime = 'Location $selectedValue scanned at $timeFormat';
+        locationOneTime =
+            'Location $selectedValue scanned at $timeFormat in location: $address}';
         scannedLocation.add(locationOneTime);
       }
-      print(scannedLocation);
 
       setState(() {
         result = qrResult;
-        resultTime = locationOneTime;
         _firestore.collection('messages').add({
           'user': _auth.currentUser.email,
           'location': result,
@@ -142,6 +176,7 @@ class _ScanScreenState extends State<ScanScreen> {
                   );
                 }),
           ),
+          Text('ADDRESS $address'),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(

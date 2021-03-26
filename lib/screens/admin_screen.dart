@@ -53,7 +53,10 @@ class _AdminScreenState extends State<AdminScreen> {
               children: [
                 Text('Last Locations Scanned'),
                 StreamBuilder<QuerySnapshot>(
-                  stream: _db.collection('messages').snapshots(),
+                  stream: _db
+                      .collection('messages')
+                      .orderBy('timestamp')
+                      .snapshots(),
                   builder: (BuildContext context, snapshot) {
                     if (!snapshot.hasData) {
                       return Center(

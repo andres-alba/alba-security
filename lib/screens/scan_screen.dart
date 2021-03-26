@@ -130,38 +130,44 @@ class _ScanScreenState extends State<ScanScreen> {
           children: [
             SizedBox(height: 20.0),
             Text(
-              '    Please select the Location:',
+              'Please scan the following Locations:',
               style: TextStyle(
                 fontSize: 20.0,
               ),
             ),
             SizedBox(height: 20.0),
-            DropdownButton(
-              value: selectedValue,
-              icon: Icon(Icons.arrow_downward_rounded),
-              iconSize: 22,
-              elevation: 16,
-              style: TextStyle(color: Colors.black),
-              onChanged: (value) {
-                setState(() {
-                  selectedValue = value;
-                });
-              },
-              items: [
-                DropdownMenuItem(
-                  child: Text("Location 1"),
-                  value: 1,
-                ),
-                DropdownMenuItem(
-                  child: Text("Location 2"),
-                  value: 2,
-                ),
-                DropdownMenuItem(
-                  child: Text("Location 3"),
-                  value: 3,
-                ),
-              ],
+            Text(
+              'Location 1: Entrance\nLocation 2: Parking Lot\nLocation 3: Kitchen\nLocation 4: Security Room',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
             ),
+//            DropdownButton(
+//              value: selectedValue,
+//              icon: Icon(Icons.arrow_downward_rounded),
+//              iconSize: 22,
+//              elevation: 16,
+//              style: TextStyle(color: Colors.black),
+//              onChanged: (value) {
+//                setState(() {
+//                  selectedValue = value;
+//                });
+//              },
+//              items: [
+//                DropdownMenuItem(
+//                  child: Text("Location 1"),
+//                  value: 1,
+//                ),
+//                DropdownMenuItem(
+//                  child: Text("Location 2"),
+//                  value: 2,
+//                ),
+//                DropdownMenuItem(
+//                  child: Text("Location 3"),
+//                  value: 3,
+//                ),
+//              ],
+//            ),
             SizedBox(height: 20.0),
             Expanded(
               child: ListView.builder(

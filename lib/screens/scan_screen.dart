@@ -31,6 +31,7 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   void initState() {
     super.initState();
+    getAddressBasedOnLocation();
   }
 
   // Get current location
@@ -51,7 +52,6 @@ class _ScanScreenState extends State<ScanScreen> {
   getAddressBasedOnLocation() async {
     final coordinates =
         new Coordinates(double.parse(latitude), double.parse(longitude));
-    print('COORDINATESSSSSSSSSS: $coordinates');
 
     var addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
@@ -61,7 +61,6 @@ class _ScanScreenState extends State<ScanScreen> {
   }
 
   String result = "Hey there !";
-  String resultTime = "";
   String locationOneWalkTimeOne = '02:00 AM';
   String locationOneWalkTimeTwo = '02:10 AM';
 
@@ -85,8 +84,7 @@ class _ScanScreenState extends State<ScanScreen> {
         locationOneTime = "Location found at $locationOne";
         scannedOnTime = true;
       } else {
-        locationOneTime =
-            'Location $selectedValue scanned at $timeFormat in location: $address}';
+        locationOneTime = '$qrResult scanned at $timeFormat in $address}';
         scannedLocation.add(locationOneTime);
       }
 
@@ -125,59 +123,58 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: 20.0),
-          Text(
-            '    Please select the Location:',
-            style: TextStyle(
-              fontSize: 20.0,
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20.0),
+            Text(
+              '    Please select the Location:',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
             ),
-          ),
-          SizedBox(height: 20.0),
-          DropdownButton(
-            value: selectedValue,
-            icon: Icon(Icons.arrow_downward_rounded),
-            iconSize: 22,
-            elevation: 16,
-            style: TextStyle(color: Colors.black),
-            onChanged: (value) {
-              setState(() {
-                selectedValue = value;
-              });
-            },
-            items: [
-              DropdownMenuItem(
-                child: Text("Location 1"),
-                value: 1,
-              ),
-              DropdownMenuItem(
-                child: Text("Location 2"),
-                value: 2,
-              ),
-              DropdownMenuItem(
-                child: Text("Location 3"),
-                value: 3,
-              ),
-            ],
-          ),
-          SizedBox(height: 20.0),
-          Expanded(
-            child: ListView.builder(
-                itemCount: 1,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text('$scannedLocation'),
-                    trailing: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.check),
-                    ),
-                  );
-                }),
-          ),
-          Text('ADDRESS $address'),
-        ],
+            SizedBox(height: 20.0),
+            DropdownButton(
+              value: selectedValue,
+              icon: Icon(Icons.arrow_downward_rounded),
+              iconSize: 22,
+              elevation: 16,
+              style: TextStyle(color: Colors.black),
+              onChanged: (value) {
+                setState(() {
+                  selectedValue = value;
+                });
+              },
+              items: [
+                DropdownMenuItem(
+                  child: Text("Location 1"),
+                  value: 1,
+                ),
+                DropdownMenuItem(
+                  child: Text("Location 2"),
+                  value: 2,
+                ),
+                DropdownMenuItem(
+                  child: Text("Location 3"),
+                  value: 3,
+                ),
+              ],
+            ),
+            SizedBox(height: 20.0),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: scannedLocation.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text('${scannedLocation[index]}'),
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.camera_alt),

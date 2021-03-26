@@ -51,11 +51,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: 60,
+                    height: 100,
                   ),
                 ),
                 TypewriterAnimatedTextKit(
-                  text: ['Seguridad Alba'],
+                  text: ['Alba Patrol'],
                   textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 30.0,
@@ -65,7 +65,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ],
             ),
             SizedBox(
-              height: 48.0,
+              height: 100.0,
             ),
             RoundedButton(
               buttonText: 'Log In',
@@ -74,13 +74,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 Navigator.pushNamed(context, LoginScreen.id);
               },
             ),
-            RoundedButton(
-              buttonText: 'Register',
-              color: registerButtonColor,
-              onPressed: () {
-                Navigator.pushNamed(context, RegistrationScreen.id);
-              },
-            ),
+//            RoundedButton(
+//              buttonText: 'Register',
+//              color: registerButtonColor,
+//              onPressed: () {
+//                Navigator.pushNamed(context, RegistrationScreen.id);
+//              },
+//            ),
           ],
         ),
       ),

@@ -18,8 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
-  User user;
-
   //bottom nav stuff
   PageController _pageController = PageController();
 
@@ -70,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
             return Center(child: LinearProgressIndicator());
           }
           final userData = snapshot.data.data();
-          print(userData);
           if (userData['role'] == 'admin') {
             return AdminScreen();
           }

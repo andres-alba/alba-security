@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'location_history_screen.dart';
 import 'login_screen.dart';
+import 'dart:async';
 
 final _auth = FirebaseAuth.instance;
+final _db = FirebaseFirestore.instance;
 
 class AdminScreen extends StatefulWidget {
   static const String id = 'admin_screen';
@@ -14,9 +16,9 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
-  final _db = FirebaseFirestore.instance;
   final now = DateTime.now();
-  final totalLocations = 4;
+
+  int totalLocations = 4;
 
   Future<bool> _onBackPressed() {
     return showDialog(
@@ -41,6 +43,19 @@ class _AdminScreenState extends State<AdminScreen> {
         ],
       ),
     );
+  }
+
+  void _checkNumberLocations() async {
+    final snapshot =
+        await _db.collection('users').doc('lrXD7wcnmUXRlHDQSyyPoh0UEuP2').get();
+    final locations = int.parse(snapshot.data()['locations']);
+    totalLocations = locations;
+  }
+
+  @override
+  void initState() {
+    _checkNumberLocations();
+    super.initState();
   }
 
   @override
@@ -68,14 +83,12 @@ class _AdminScreenState extends State<AdminScreen> {
                     }
                     // grab all documents from 'messages' collections
                     final messages = snapshot.data.docs;
-                    //print(messages.runtimeType);
 
                     // array where location details will be stored
                     List<LocationMessage> locationMessages = [];
 
                     // for every document inside all documents
                     for (var message in messages) {
-                      print(message.data());
                       final location = message.data()['location'];
                       final user = message.data()['user'];
                       final scannedTime = message.data()['timestamp'].toDate();
@@ -86,9 +99,9 @@ class _AdminScreenState extends State<AdminScreen> {
                       final today = DateTime(now.year, now.month, now.day);
 
                       //print('scannedTime: $formatScannedTime ... Todays time: $today');
-                      if (today == formatScannedTime) {
-                        print('scannedTime: $scannedTime');
-                      }
+//                      if (today == formatScannedTime) {
+//                        print('scannedTime: $scannedTime');
+//                      }
 
                       // change timestamp to readable String
                       final formattedDate =
@@ -110,7 +123,8 @@ class _AdminScreenState extends State<AdminScreen> {
                             onTap: () {
                               showModalBottomSheet(
                                 context: context,
-                                builder: (context) => LocationHistoryScreen(),
+                                builder: (context) => LocationHistoryScreen(
+                                    locationNumber: i + 1),
                               );
                             },
                             child: LocationCard(
@@ -120,14 +134,6 @@ class _AdminScreenState extends State<AdminScreen> {
                         },
                       ),
                     );
-
-//                    return Expanded(
-//                      child: ListView(
-//                        padding: EdgeInsets.symmetric(
-//                            horizontal: 20.0, vertical: 20.0),
-//                        children: locationMessages,
-//                      ),
-//                    );
                   },
                 ),
               ],

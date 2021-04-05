@@ -7,6 +7,9 @@ final now = DateTime.now();
 final totalLocations = 4;
 
 class LocationHistoryScreen extends StatelessWidget {
+  final int locationNumber;
+
+  LocationHistoryScreen({this.locationNumber});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +32,7 @@ class LocationHistoryScreen extends StatelessWidget {
             StreamBuilder<QuerySnapshot>(
               stream: _db
                   .collection('messages')
-                  .where('location', isEqualTo: 'Location #1')
+                  .where('location', isEqualTo: 'Location # $locationNumber')
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (BuildContext context, snapshot) {
@@ -57,12 +60,6 @@ class LocationHistoryScreen extends StatelessWidget {
                       scannedTime.year, scannedTime.month, scannedTime.day);
                   final today = DateTime(now.year, now.month, now.day);
 
-                  //print('scannedTime: $formatScannedTime ... Todays time: $today');
-                  if (today == formatScannedTime) {
-                    print('scannedTime: $scannedTime');
-                  }
-
-                  // change timestamp to readable String
                   final formattedDate =
                       DateFormat.yMMMMd().add_jm().format(scannedTime);
 

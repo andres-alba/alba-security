@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:alba_security/components/alert_message.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ScanScreen extends StatefulWidget {
   static const String id = 'scan_screen';
@@ -22,6 +23,7 @@ class _ScanScreenState extends State<ScanScreen> {
   List scannedLocation = [];
   bool scannedOnTime = false;
   int selectedValue = 1;
+  String displayName = "";
 
   // Geolocator points
   String latitude = "";
@@ -31,6 +33,7 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   void initState() {
     super.initState();
+    _getUserDisplayName();
     getAddressBasedOnLocation();
   }
 
@@ -120,6 +123,15 @@ class _ScanScreenState extends State<ScanScreen> {
     }
   }
 
+  //grab user displayname from firestore 'displaName'
+
+  void _getUserDisplayName() async {
+    final snapshot =
+        await _firestore.collection('users').doc(_auth.currentUser.uid).get();
+    displayName = snapshot.data()['displayName'];
+    print(displayName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,54 +142,56 @@ class _ScanScreenState extends State<ScanScreen> {
           children: [
             SizedBox(height: 20.0),
             Text(
-              'Please scan the following Locations:',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
+              'March 24',
+              style: GoogleFonts.roboto(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15.0),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(
+              height: 5.0,
+            ),
             Text(
-              'Location 1: Entrance\nLocation 2: Parking Lot\nLocation 3: Kitchen\nLocation 4: Security Room',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
+              'Hi, $displayName',
+              style: GoogleFonts.roboto(
+                  fontSize: 30.0, fontWeight: FontWeight.w500),
             ),
-//            DropdownButton(
-//              value: selectedValue,
-//              icon: Icon(Icons.arrow_downward_rounded),
-//              iconSize: 22,
-//              elevation: 16,
-//              style: TextStyle(color: Colors.black),
-//              onChanged: (value) {
-//                setState(() {
-//                  selectedValue = value;
-//                });
-//              },
-//              items: [
-//                DropdownMenuItem(
-//                  child: Text("Location 1"),
-//                  value: 1,
-//                ),
-//                DropdownMenuItem(
-//                  child: Text("Location 2"),
-//                  value: 2,
-//                ),
-//                DropdownMenuItem(
-//                  child: Text("Location 3"),
-//                  value: 3,
-//                ),
-//              ],
-//            ),
             SizedBox(height: 20.0),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: scannedLocation.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text('${scannedLocation[index]}'),
-                    );
-                  }),
+            Container(
+              padding: EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
+              height: 200.0,
+              child: Card(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 10.0),
+                    Text('Please scan the following Locations:',
+                        style: GoogleFonts.roboto(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.orange)),
+                    SizedBox(height: 10.0),
+                    Text(
+                      'Location 1: Entrance\nLocation 2: Parking Lot\nLocation 3: Kitchen\nLocation 4: Security Room',
+                      style: GoogleFonts.roboto(fontSize: 16.0),
+                    ),
+                    SizedBox(height: 20.0),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: scannedLocation.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text('${scannedLocation[index]}'),
+                            );
+                          }),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

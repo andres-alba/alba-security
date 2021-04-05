@@ -94,9 +94,9 @@ class _AdminScreenState extends State<AdminScreen> {
                       final scannedTime = message.data()['timestamp'].toDate();
 
                       final approved = message.data()['approved'];
-                      final formatScannedTime = DateTime(
-                          scannedTime.year, scannedTime.month, scannedTime.day);
-                      final today = DateTime(now.year, now.month, now.day);
+//                      final formatScannedTime = DateTime(
+//                          scannedTime.year, scannedTime.month, scannedTime.day);
+//                      final today = DateTime(now.year, now.month, now.day);
 
                       //print('scannedTime: $formatScannedTime ... Todays time: $today');
 //                      if (today == formatScannedTime) {

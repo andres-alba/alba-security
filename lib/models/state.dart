@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'dart:async';
-import 'package:alba_security/components/alert_message.dart';
 import 'package:intl/intl.dart';
 
 String result = "Hey there !";

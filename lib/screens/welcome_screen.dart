@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:alba_security/screens/login_screen.dart';
-import 'package:alba_security/screens/registration_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:alba_security/components/rounded_button.dart';
 import 'package:alba_security/constants.dart';

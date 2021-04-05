@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:alba_security/screens/home.dart';
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:alba_security/screens/admin_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';

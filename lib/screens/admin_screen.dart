@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'location_history_screen.dart';
 import 'login_screen.dart';
 import 'dart:async';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:alba_security/constants.dart';
 
 final _auth = FirebaseAuth.instance;
 final _db = FirebaseFirestore.instance;
@@ -54,8 +56,8 @@ class _AdminScreenState extends State<AdminScreen> {
 
   @override
   void initState() {
-    _checkNumberLocations();
     super.initState();
+    _checkNumberLocations();
   }
 
   @override
@@ -69,72 +71,97 @@ class _AdminScreenState extends State<AdminScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Last Locations Scanned'),
-                StreamBuilder<QuerySnapshot>(
-                  stream: _db
-                      .collection('messages')
-                      .orderBy('timestamp', descending: true)
-                      .snapshots(),
-                  builder: (BuildContext context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: LinearProgressIndicator(),
-                      );
-                    }
-                    // grab all documents from 'messages' collections
-                    final messages = snapshot.data.docs;
+                SizedBox(height: 20.0),
+                Text(
+                  '$monthDay',
+                  style: GoogleFonts.roboto(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15.0),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                Text(
+                  'Hi, Admin',
+                  style: GoogleFonts.roboto(
+                      fontSize: 30.0, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(height: 40.0),
+                Text(
+                  'Locations Scanned',
+                  style: GoogleFonts.roboto(fontSize: 20.0),
+                ),
+                Container(
+                  height: 200.0,
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: _db
+                        .collection('messages')
+                        .orderBy('timestamp', descending: true)
+                        .snapshots(),
+                    builder: (BuildContext context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: LinearProgressIndicator(),
+                        );
+                      }
+                      // grab all documents from 'messages' collections
+                      final messages = snapshot.data.docs;
 
-                    // array where location details will be stored
-                    List<LocationMessage> locationMessages = [];
+                      // array where location details will be stored
+                      List<LocationMessage> locationMessages = [];
 
-                    // for every document inside all documents
-                    for (var message in messages) {
-                      final location = message.data()['location'];
-                      final user = message.data()['user'];
-                      final scannedTime = message.data()['timestamp'].toDate();
+                      // for every document inside all documents
+                      for (var message in messages) {
+                        final location = message.data()['location'];
+                        final user = message.data()['user'];
+                        final scannedTime =
+                            message.data()['timestamp'].toDate();
 
-                      final approved = message.data()['approved'];
+                        final approved = message.data()['approved'];
 //                      final formatScannedTime = DateTime(
 //                          scannedTime.year, scannedTime.month, scannedTime.day);
 //                      final today = DateTime(now.year, now.month, now.day);
 
-                      //print('scannedTime: $formatScannedTime ... Todays time: $today');
+                        //print('scannedTime: $formatScannedTime ... Todays time: $today');
 //                      if (today == formatScannedTime) {
 //                        print('scannedTime: $scannedTime');
 //                      }
 
-                      // change timestamp to readable String
-                      final formattedDate =
-                          DateFormat.yMMMMd().add_jm().format(scannedTime);
+                        // change timestamp to readable String
+                        final formattedDate =
+                            DateFormat.yMMMMd().add_jm().format(scannedTime);
 
-                      final locationMessage = LocationMessage(
-                        user: user.toString(),
-                        location: location.toString(),
-                        scannedTime: formattedDate,
-                        approved: approved,
+                        final locationMessage = LocationMessage(
+                          user: user.toString(),
+                          location: location.toString(),
+                          scannedTime: formattedDate,
+                          approved: approved,
+                        );
+                        locationMessages.add(locationMessage);
+                      }
+                      return Expanded(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: totalLocations,
+                          itemBuilder: (context, i) {
+                            return GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => LocationHistoryScreen(
+                                      locationNumber: i + 1),
+                                );
+                              },
+                              child: LocationCard(
+                                locationName: 'Location ${i + 1}',
+                              ),
+                            );
+                          },
+                        ),
                       );
-                      locationMessages.add(locationMessage);
-                    }
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: totalLocations,
-                        itemBuilder: (context, i) {
-                          return GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (context) => LocationHistoryScreen(
-                                    locationNumber: i + 1),
-                              );
-                            },
-                            child: LocationCard(
-                              locationName: 'Location ${i + 1}',
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
+                    },
+                  ),
                 ),
               ],
             ),
@@ -187,17 +214,18 @@ class LocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-      height: 100.0,
+      margin: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 50.0),
+      height: 40.0,
+      width: 200.0,
       child: Card(
-        elevation: 10.0,
+        elevation: 5.0,
         //margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 10.0),
+            SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

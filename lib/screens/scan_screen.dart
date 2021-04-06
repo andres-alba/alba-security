@@ -9,6 +9,7 @@ import 'package:alba_security/components/alert_message.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:alba_security/constants.dart';
 
 class ScanScreen extends StatefulWidget {
   static const String id = 'scan_screen';
@@ -142,7 +143,7 @@ class _ScanScreenState extends State<ScanScreen> {
           children: [
             SizedBox(height: 20.0),
             Text(
-              'March 24',
+              '$monthDay',
               style: GoogleFonts.roboto(
                   color: Colors.grey,
                   fontWeight: FontWeight.w500,
@@ -160,6 +161,7 @@ class _ScanScreenState extends State<ScanScreen> {
             Container(
               padding: EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
               height: 200.0,
+              width: 500.0,
               child: Card(
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
@@ -178,20 +180,20 @@ class _ScanScreenState extends State<ScanScreen> {
                       'Location 1: Entrance\nLocation 2: Parking Lot\nLocation 3: Kitchen\nLocation 4: Security Room',
                       style: GoogleFonts.roboto(fontSize: 16.0),
                     ),
-                    SizedBox(height: 20.0),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: scannedLocation.length,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text('${scannedLocation[index]}'),
-                            );
-                          }),
-                    ),
                   ],
                 ),
               ),
+            ),
+            SizedBox(height: 20.0),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: scannedLocation.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text('${scannedLocation[index]}'),
+                    );
+                  }),
             ),
           ],
         ),

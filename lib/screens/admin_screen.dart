@@ -56,8 +56,8 @@ class _AdminScreenState extends State<AdminScreen> {
 
   @override
   void initState() {
-    super.initState();
     _checkNumberLocations();
+    super.initState();
   }
 
   @override
@@ -109,42 +109,25 @@ class _AdminScreenState extends State<AdminScreen> {
                       final messages = snapshot.data.docs;
 
                       // array where location details will be stored
-                      List<LocationMessage> locationMessages = [];
+                      List lastScannedTime = [];
 
                       // for every document inside all documents
                       for (var message in messages) {
+                        //print(message.data());
                         final location = message.data()['location'];
                         final user = message.data()['user'];
                         final scannedTime =
                             message.data()['timestamp'].toDate();
-
-                        final approved = message.data()['approved'];
-//                      final formatScannedTime = DateTime(
-//                          scannedTime.year, scannedTime.month, scannedTime.day);
-//                      final today = DateTime(now.year, now.month, now.day);
-
-                        //print('scannedTime: $formatScannedTime ... Todays time: $today');
-//                      if (today == formatScannedTime) {
-//                        print('scannedTime: $scannedTime');
-//                      }
-
-                        // change timestamp to readable String
-                        final formattedDate =
-                            DateFormat.yMMMMd().add_jm().format(scannedTime);
-
-                        final locationMessage = LocationMessage(
-                          user: user.toString(),
-                          location: location.toString(),
-                          scannedTime: formattedDate,
-                          approved: approved,
-                        );
-                        locationMessages.add(locationMessage);
+                        lastScannedTime.add(scannedTime);
                       }
+                      print(lastScannedTime[0]);
+
                       return Expanded(
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: totalLocations,
                           itemBuilder: (context, i) {
+                            //print('Location # ${i + 1}');
                             return GestureDetector(
                               onTap: () {
                                 showModalBottomSheet(
@@ -155,6 +138,8 @@ class _AdminScreenState extends State<AdminScreen> {
                               },
                               child: LocationCard(
                                 locationName: 'Location ${i + 1}',
+                                firebaseLocationName: 'Location # ${i + 1}',
+                                scannedTime: lastScannedTime[0],
                               ),
                             );
                           },
@@ -172,44 +157,15 @@ class _AdminScreenState extends State<AdminScreen> {
   }
 }
 
-class LocationMessage extends StatelessWidget {
-  final String location;
-  final String user;
-  final String approved;
-  final String scannedTime;
-
-  const LocationMessage(
-      {this.location, this.user, this.approved, this.scannedTime});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          '$location',
-          style: TextStyle(
-              fontSize: 14.0, color: Colors.green, fontWeight: FontWeight.w700),
-        ),
-        Text(
-          ' scanned on ',
-          style: TextStyle(
-              fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.w700),
-        ),
-        Text(
-          '$scannedTime',
-          style: TextStyle(
-              fontSize: 14.0, color: Colors.blue, fontWeight: FontWeight.w700),
-        ),
-      ],
-    );
-  }
-}
-
 class LocationCard extends StatelessWidget {
   final locationName;
+  final scannedTime;
+  final firebaseLocationName;
 
-  const LocationCard({@required this.locationName});
+  const LocationCard(
+      {@required this.locationName,
+      this.scannedTime,
+      this.firebaseLocationName});
 
   @override
   Widget build(BuildContext context) {
@@ -243,9 +199,44 @@ class LocationCard extends StatelessWidget {
             ),
             SizedBox(height: 5.0),
             Text(
-              'last time scanned: xxxx',
+              ' last scan:',
               style: TextStyle(fontSize: 15.0, color: Colors.grey),
             ),
+            Container(
+              width: 100.0,
+              height: 50.0,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: _db
+                    .collection('messages')
+                    .where('location', isEqualTo: '$firebaseLocationName')
+                    .orderBy('timestamp', descending: true)
+                    .snapshots(),
+                builder: (BuildContext context, snapshot) {
+                  // grab all documents from 'messages' collections
+                  final messages = snapshot.data.docs;
+
+                  // array where location details will be stored
+                  List lastScannedTime = [];
+
+                  // for every document inside all documents
+                  for (var message in messages) {
+                    //print(message.data());
+                    final location = message.data()['location'];
+                    final user = message.data()['user'];
+                    final scannedTime = message.data()['timestamp'].toDate();
+                    lastScannedTime.add(scannedTime);
+                  }
+                  if (lastScannedTime.isNotEmpty) {
+                    return Text(
+                      '${DateFormat.yMMMMd().add_jm().format(lastScannedTime[0])}',
+                      style: TextStyle(fontSize: 15.0),
+                    );
+                  } else {
+                    return Text('No Scan Information');
+                  }
+                },
+              ),
+            )
           ],
         ),
       ),

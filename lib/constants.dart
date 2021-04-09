@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+final kTextStyle = GoogleFonts.roboto(fontSize: 14.0);
 
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,

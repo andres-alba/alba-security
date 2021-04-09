@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'category_screen.dart';
+import 'bottom_nav.dart';
 import 'login_screen.dart';
 import 'profile_screen.dart';
 import 'scan_screen.dart';
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (userData['role'] == 'admin') {
             return AdminScreen();
           }
-          return CategoryScreen();
+          return BottomNav();
         },
       ),
     );

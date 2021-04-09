@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alba_security/controllers/HomeController.dart';
+import 'dashboard_screen.dart';
 import 'scan_screen.dart';
 
-class CategoryScreen extends StatelessWidget {
+class BottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (controller) {
@@ -12,7 +13,7 @@ class CategoryScreen extends StatelessWidget {
           child: IndexedStack(
             index: controller.tabIndex,
             children: [
-              ScanScreen(),
+              DashBoardScreen(),
               ScanScreen(),
               ScanScreen(),
               ScanScreen(),

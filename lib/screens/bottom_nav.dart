@@ -1,3 +1,5 @@
+import 'package:alba_security/screens/time_screen.dart';
+import 'package:alba_security/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alba_security/controllers/HomeController.dart';
@@ -15,8 +17,8 @@ class BottomNav extends StatelessWidget {
             children: [
               DashBoardScreen(),
               ScanScreen(),
-              ScanScreen(),
-              ScanScreen(),
+              TimeScreen(),
+              SettingsScreen(),
             ],
           ),
         ),
@@ -34,8 +36,8 @@ class BottomNav extends StatelessWidget {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.notification_important),
-              label: 'Notification',
+              icon: Icon(Icons.qr_code_scanner),
+              label: 'Scan',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.lock_clock),

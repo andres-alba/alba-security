@@ -47,17 +47,17 @@ class _AdminScreenState extends State<AdminScreen> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _checkNumberLocations();
+  }
+
   void _checkNumberLocations() async {
     final snapshot =
         await _db.collection('users').doc('lrXD7wcnmUXRlHDQSyyPoh0UEuP2').get();
     final locations = int.parse(snapshot.data()['locations']);
     totalLocations = locations;
-  }
-
-  @override
-  void initState() {
-    _checkNumberLocations();
-    super.initState();
   }
 
   @override
@@ -89,7 +89,7 @@ class _AdminScreenState extends State<AdminScreen> {
                 ),
                 SizedBox(height: 40.0),
                 Text(
-                  'Locations Scanned',
+                  'Scan History:',
                   style: GoogleFonts.roboto(fontSize: 20.0),
                 ),
                 Container(
@@ -120,14 +120,13 @@ class _AdminScreenState extends State<AdminScreen> {
                             message.data()['timestamp'].toDate();
                         lastScannedTime.add(scannedTime);
                       }
-                      print(lastScannedTime[0]);
 
                       return Expanded(
                         child: ListView.builder(
+                          shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemCount: totalLocations,
                           itemBuilder: (context, i) {
-                            //print('Location # ${i + 1}');
                             return GestureDetector(
                               onTap: () {
                                 showModalBottomSheet(
@@ -138,7 +137,7 @@ class _AdminScreenState extends State<AdminScreen> {
                               },
                               child: LocationCard(
                                 locationName: 'Location ${i + 1}',
-                                firebaseLocationName: 'Location # ${i + 1}',
+                                fireBaseLocationName: 'Location # ${i + 1}',
                                 scannedTime: lastScannedTime[0],
                               ),
                             );
@@ -160,12 +159,12 @@ class _AdminScreenState extends State<AdminScreen> {
 class LocationCard extends StatelessWidget {
   final locationName;
   final scannedTime;
-  final firebaseLocationName;
+  final fireBaseLocationName;
 
   const LocationCard(
       {@required this.locationName,
       this.scannedTime,
-      this.firebaseLocationName});
+      this.fireBaseLocationName});
 
   @override
   Widget build(BuildContext context) {
@@ -208,10 +207,13 @@ class LocationCard extends StatelessWidget {
               child: StreamBuilder<QuerySnapshot>(
                 stream: _db
                     .collection('messages')
-                    .where('location', isEqualTo: '$firebaseLocationName')
+                    .where('location', isEqualTo: '$fireBaseLocationName')
                     .orderBy('timestamp', descending: true)
                     .snapshots(),
                 builder: (BuildContext context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text('No data');
+                  }
                   // grab all documents from 'messages' collections
                   final messages = snapshot.data.docs;
 
@@ -220,20 +222,16 @@ class LocationCard extends StatelessWidget {
 
                   // for every document inside all documents
                   for (var message in messages) {
-                    //print(message.data());
-                    final location = message.data()['location'];
-                    final user = message.data()['user'];
                     final scannedTime = message.data()['timestamp'].toDate();
                     lastScannedTime.add(scannedTime);
                   }
-                  if (lastScannedTime.isNotEmpty) {
-                    return Text(
-                      '${DateFormat.yMMMMd().add_jm().format(lastScannedTime[0])}',
-                      style: TextStyle(fontSize: 15.0),
-                    );
-                  } else {
-                    return Text('No Scan Information');
-                  }
+
+                  return lastScannedTime.isNotEmpty
+                      ? Text(
+                          '${DateFormat.yMMMMd().add_jm().format(lastScannedTime[0])}',
+                          style: TextStyle(fontSize: 15.0),
+                        )
+                      : Text('Unknown', style: TextStyle(fontSize: 15.0));
                 },
               ),
             )

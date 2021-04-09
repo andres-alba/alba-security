@@ -7,8 +7,8 @@ const kSendButtonTextStyle = TextStyle(
   fontSize: 18.0,
 );
 
-const logInButtonColor = Colors.lightBlueAccent;
-const registerButtonColor = Colors.blueAccent;
+const kLogInButtonColor = Colors.lightBlueAccent;
+const kRegisterButtonColor = Colors.blueAccent;
 
 const kMessageTextFieldDecoration = InputDecoration(
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),

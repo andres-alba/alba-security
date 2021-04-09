@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'category_screen.dart';
 import 'login_screen.dart';
 import 'profile_screen.dart';
 import 'scan_screen.dart';
@@ -39,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (userData['role'] == 'admin') {
             return AdminScreen();
           }
-          return ScanScreen();
+          return CategoryScreen();
         },
       ),
     );

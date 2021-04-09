@@ -6,10 +6,14 @@ import 'package:alba_security/screens/scan_screen.dart';
 import 'package:alba_security/screens/home.dart';
 import 'package:alba_security/screens/admin_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
+import 'controllers/HomeController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  Get.lazyPut<HomeController>(() => HomeController());
   runApp(MyApp());
 }
 

@@ -5,6 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 final kTextStyle =
     GoogleFonts.roboto(fontSize: 14.0, fontWeight: FontWeight.bold);
 
+final kSettingsTitle = GoogleFonts.roboto(
+    fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.blue);
+
+final kSettingsListTile =
+    GoogleFonts.roboto(fontSize: 14.0, fontWeight: FontWeight.bold);
+
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,
   fontWeight: FontWeight.bold,

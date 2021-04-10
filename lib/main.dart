@@ -7,6 +7,7 @@ import 'package:alba_security/screens/home.dart';
 import 'package:alba_security/screens/admin_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'controllers/GridController.dart';
 import 'controllers/HomeController.dart';
 
 void main() async {
@@ -14,13 +15,14 @@ void main() async {
   await Firebase.initializeApp();
 
   Get.lazyPut<HomeController>(() => HomeController());
+  Get.lazyPut<DashboardController>(() => DashboardController());
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: WelcomeScreen(),
       initialRoute: WelcomeScreen.id,
@@ -32,6 +34,10 @@ class MyApp extends StatelessWidget {
         ScanScreen.id: (context) => ScanScreen(),
         AdminScreen.id: (context) => AdminScreen(),
       },
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
     );
   }
 }

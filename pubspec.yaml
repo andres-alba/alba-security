@@ -21,6 +21,9 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  torch_compat: ^1.0.2
+  flashlight: ^0.1.1
+  camera: ^0.7.0
   get: ^3.12.1
   geocoder: ^0.2.1
   geolocator: ^3.0.1

@@ -10,6 +10,7 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alba_security/constants.dart';
+import 'package:get/get.dart';
 
 class ScanScreen extends StatefulWidget {
   static const String id = 'scan_screen';

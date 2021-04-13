@@ -58,10 +58,10 @@ class DashBoardScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          DashBoardWidget(
-                              Icons.qr_code_scanner, 'Scan', ScanScreen()),
-                          DashBoardWidget(
-                              Icons.computer, 'Watch Mode', ScanScreen()),
+                          DashBoardWidget(Icons.qr_code_scanner,
+                              'dashboard_scan'.tr, ScanScreen()),
+                          DashBoardWidget(Icons.computer, 'dashboard_watch'.tr,
+                              ScanScreen()),
                           RawMaterialButton(
                             onPressed: () async {
                               if (controller.isFlashOn) {
@@ -107,7 +107,7 @@ class DashBoardScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10.0),
                                 Text(
-                                  'Flash Light',
+                                  'dashboard_light'.tr,
                                   style: kTextStyle,
                                 ),
                               ],
@@ -119,12 +119,12 @@ class DashBoardScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          DashBoardWidget(
-                              Icons.calendar_today, 'Scheduling', ScanScreen()),
-                          DashBoardWidget(
-                              Icons.policy, 'Company Policy', ScanScreen()),
-                          DashBoardWidget(
-                              Icons.report, 'Reports', ScanScreen()),
+                          DashBoardWidget(Icons.calendar_today,
+                              'dashboard_schedule'.tr, ScanScreen()),
+                          DashBoardWidget(Icons.policy, 'dashboard_policy'.tr,
+                              ScanScreen()),
+                          DashBoardWidget(Icons.report, 'dashboard_reports'.tr,
+                              ScanScreen()),
                         ],
                       ),
                     ],

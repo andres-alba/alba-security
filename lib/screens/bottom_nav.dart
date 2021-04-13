@@ -33,19 +33,19 @@ class BottomNav extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Home',
+              label: 'bottomnav_home'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.qr_code_scanner),
-              label: 'Scan',
+              label: 'bottomnav_scan'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.lock_clock),
-              label: 'Time Clock',
+              label: 'bottomnav_clock'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: 'Settings',
+              label: 'bottomnav_settings'.tr,
             ),
           ],
         ),

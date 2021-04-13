@@ -18,6 +18,16 @@ class AppTranslations extends Translations {
           'settings_security': 'Security',
           'settings_common': 'Common',
           'settings_lockapp': 'Lock app in background',
+          'dashboard_scan': 'Scan',
+          'dashboard_watch': 'Watch Mode',
+          'dashboard_light': 'Flash Light',
+          'dashboard_schedule': 'Scheduling',
+          'dashboard_policy': 'Company Policy',
+          'dashboard_reports': 'Reports',
+          'bottomnav_home': 'Home',
+          'bottomnav_scan': 'Scan',
+          'bottomnav_clock': 'Time Clock',
+          'bottomnav_settings': 'Settings',
         },
         'es_CO': {
           'hello': 'Hola',
@@ -34,6 +44,16 @@ class AppTranslations extends Translations {
           'settings_security': 'Seguridad',
           'settings_common': 'En Comun',
           'settings_lockapp': 'Bloquear app en fondo',
+          'dashboard_scan': 'Escanear',
+          'dashboard_watch': 'Modo Busqueda',
+          'dashboard_light': 'Linterna',
+          'dashboard_schedule': 'Calendario',
+          'dashboard_policy': 'Politica',
+          'dashboard_reports': 'Reportes',
+          'bottomnav_home': 'Inicio',
+          'bottomnav_scan': 'Escanear',
+          'bottomnav_clock': 'Reloj',
+          'bottomnav_settings': 'Configuracion',
         }
       };
 }

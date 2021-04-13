@@ -11,6 +11,7 @@ import 'package:alba_security/translations.dart';
 import 'controllers/DropdownController.dart';
 import 'controllers/GridController.dart';
 import 'controllers/HomeController.dart';
+import 'controllers/SettingsController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ void main() async {
   Get.lazyPut<HomeController>(() => HomeController());
   Get.lazyPut<DashboardController>(() => DashboardController());
   Get.lazyPut<DropdownController>(() => DropdownController());
+  Get.lazyPut<SettingsController>(() => SettingsController());
 
   runApp(MyApp());
 }

@@ -3,6 +3,7 @@ import 'package:alba_security/screens/login_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:alba_security/components/rounded_button.dart';
 import 'package:alba_security/constants.dart';
+import 'package:get/get.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome_screen';
@@ -36,7 +37,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -66,7 +66,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               height: 100.0,
             ),
             RoundedButton(
-              buttonText: 'Log In',
+              buttonText: 'welcome_button'.tr,
               color: kLogInButtonColor,
               onPressed: () {
                 Navigator.pushNamed(context, LoginScreen.id);

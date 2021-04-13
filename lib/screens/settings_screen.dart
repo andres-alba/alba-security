@@ -1,9 +1,11 @@
+import 'package:alba_security/controllers/SettingsController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alba_security/controllers/DropdownController.dart';
 import 'package:alba_security/constants.dart';
 
 class SettingsScreen extends StatelessWidget {
+  final settingsController = Get.find<SettingsController>();
   final locales = [
     {
       'name': 'English',
@@ -38,6 +40,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     onTap: () {
                       updateLocale(locales[index]['locale'], context);
+                      settingsController.setName(locales[index]['name']);
                     },
                   ),
               separatorBuilder: (context, index) =>
@@ -70,7 +73,9 @@ class SettingsScreen extends StatelessWidget {
                     },
                     title: Text('settings_language'.tr,
                         style: TextStyle(fontWeight: FontWeight.w500)),
-                    subtitle: Text('English'),
+                    subtitle: Obx(
+                      () => Text(settingsController.language.value),
+                    ),
                     leading: Icon(Icons.language),
                   ),
                   ListTile(

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:alba_security/screens/home.dart';
 import 'dart:io';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -80,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       email = value;
                     },
                     decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Enter your email',
+                        hintText: 'login_email'.tr,
                         icon: Icon(Icons.account_circle))),
                 SizedBox(
                   height: 8.0,
@@ -93,13 +94,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       password = value;
                     },
                     decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Enter your Password',
-                        icon: Icon(Icons.lock))),
+                        hintText: 'login_pass'.tr, icon: Icon(Icons.lock))),
                 SizedBox(
                   height: 24.0,
                 ),
                 RoundedButton(
-                  buttonText: 'Log In',
+                  buttonText: 'welcome_button'.tr,
                   color: kLogInButtonColor,
                   onPressed: () async {
                     setState(() {

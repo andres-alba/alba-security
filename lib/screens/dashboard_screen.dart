@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:alba_security/constants.dart';
 import 'package:get/get.dart';
 import 'package:alba_security/controllers/GridController.dart';
-import 'package:flashlight/flashlight.dart';
 import 'login_screen.dart';
 import 'package:torch_compat/torch_compat.dart';
 

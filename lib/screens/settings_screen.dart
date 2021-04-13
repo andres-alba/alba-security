@@ -4,6 +4,50 @@ import 'package:alba_security/controllers/DropdownController.dart';
 import 'package:alba_security/constants.dart';
 
 class SettingsScreen extends StatelessWidget {
+  final locales = [
+    {
+      'name': 'English',
+      'locale': Locale('en', 'US'),
+    },
+    {
+      'name': 'Spanish',
+      'locale': Locale('es', 'CO'),
+    }
+  ];
+
+  updateLocale(Locale locale, BuildContext context) {
+    Navigator.of(context).pop();
+    Get.updateLocale(locale);
+  }
+
+  showLocalDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text("Choose your language"),
+        content: Container(
+          width: double.maxFinite,
+          child: ListView.separated(
+              shrinkWrap: true,
+              itemBuilder: (context, index) => InkWell(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        locales[index]['name'],
+                      ),
+                    ),
+                    onTap: () {
+                      updateLocale(locales[index]['locale'], context);
+                    },
+                  ),
+              separatorBuilder: (context, index) =>
+                  Divider(color: Colors.black),
+              itemCount: 2),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DropdownController>(builder: (controller) {
@@ -16,29 +60,31 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   ListTile(
                     title: Text(
-                      'Common',
+                      'settings_common'.tr,
                       style: kSettingsTitle,
                     ),
                   ),
                   ListTile(
-                    onTap: () {},
-                    title: Text('Language',
+                    onTap: () {
+                      showLocalDialog(context);
+                    },
+                    title: Text('settings_language'.tr,
                         style: TextStyle(fontWeight: FontWeight.w500)),
                     subtitle: Text('English'),
                     leading: Icon(Icons.language),
                   ),
                   ListTile(
                     title: Text(
-                      'Account',
+                      'settings_account'.tr,
                       style: kSettingsTitle,
                     ),
                   ),
                   ListTile(
-                    title: Text('Phone Number'),
+                    title: Text('settings_phone'.tr),
                     leading: Icon(Icons.phone),
                   ),
                   ListTile(
-                    title: Text('Email'),
+                    title: Text('settings_email'.tr),
                     leading: Icon(Icons.email),
                   ),
                   ListTile(
@@ -47,32 +93,17 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text(
-                      'Security',
+                      'settings_security'.tr,
                       style: kSettingsTitle,
                     ),
                   ),
                   ListTile(
-                    title: Text('Lock app in background'),
+                    title: Text('settings_lockapp'.tr),
                     leading: Icon(Icons.phonelink_lock),
                   ),
                 ],
               ),
             ),
-//            DropdownButton<String>(
-//              hint: Text('Language'),
-//              value: controller.selectedValue,
-//              onChanged: (newValue) {
-//                controller.onSelected(newValue);
-//              },
-//              elevation: 5,
-//              items: controller.language.map((String dropDownStringItem) {
-//                return DropdownMenuItem<String>(
-//                  child: Text(dropDownStringItem),
-//                  value: dropDownStringItem,
-//                );
-//              }).toList(),
-//            ),
-//            SizedBox(height: 100.0),
           ],
         ),
       );

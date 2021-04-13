@@ -18,7 +18,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = AnimationController(
       duration: Duration(seconds: 1),
@@ -54,7 +53,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   ),
                 ),
                 TypewriterAnimatedTextKit(
-                  text: ['Alba Patrol'],
+                  text: ['Security Patrol'],
                   textStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 30.0,

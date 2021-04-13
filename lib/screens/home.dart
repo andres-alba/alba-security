@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'bottom_nav.dart';
 import 'login_screen.dart';
-import 'profile_screen.dart';
-import 'scan_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'admin_screen.dart';
 
@@ -18,26 +16,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-
-  //bottom nav stuff
-  PageController _pageController = PageController();
-
-  List<Widget> _screens = [
-    ScanScreen(),
-    ProfileScreen(),
-  ];
-
-  int _selectedIndex = 0;
-
-  void _onPageChanged(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  void _onItemTapped(int selectedIndex) {
-    _pageController.jumpToPage(selectedIndex);
-  }
 
   @override
   Widget build(BuildContext context) {

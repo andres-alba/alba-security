@@ -7,7 +7,7 @@ import 'package:alba_security/screens/home.dart';
 import 'package:alba_security/screens/admin_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'components/messages.dart';
+import 'package:alba_security/translations.dart';
 import 'controllers/DropdownController.dart';
 import 'controllers/GridController.dart';
 import 'controllers/HomeController.dart';
@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      translations: Messages(),
+      translations: AppTranslations(),
+      locale: Get.deviceLocale,
       debugShowCheckedModeBanner: false,
       home: WelcomeScreen(),
       initialRoute: WelcomeScreen.id,

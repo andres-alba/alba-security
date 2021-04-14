@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'admin_bottom_nav.dart';
 import 'bottom_nav.dart';
 import 'login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -47,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           final userData = snapshot.data.data();
           if (userData['role'] == 'admin') {
-            return AdminScreen();
+            return AdminBottomNav();
           }
           return BottomNav();
         },

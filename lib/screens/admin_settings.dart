@@ -8,7 +8,7 @@ import 'login_screen.dart';
 
 final _auth = FirebaseAuth.instance;
 
-class SettingsScreen extends StatelessWidget {
+class AdminSettings extends StatelessWidget {
   final settingsController = Get.find<SettingsController>();
   final locales = [
     {

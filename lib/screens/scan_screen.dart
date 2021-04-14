@@ -82,16 +82,11 @@ class _ScanScreenState extends State<ScanScreen> {
       final now = DateTime.now();
       timeFormat = DateFormat('hh:mm a').format(now);
 
-      final locationOne = "09:02 PM";
       getCurrentLocation();
       getAddressBasedOnLocation();
-      if (result == 'Location # 1' && locationOne == timeFormat) {
-        locationOneTime = "Location found at $locationOne";
-        scannedOnTime = true;
-      } else {
-        locationOneTime = '$qrResult scanned at $timeFormat in $address}';
-        scannedLocation.add(locationOneTime);
-      }
+
+      locationOneTime = '$qrResult scanned at $timeFormat in $address}';
+      scannedLocation.add(locationOneTime);
 
       setState(() {
         result = qrResult;
@@ -168,7 +163,7 @@ class _ScanScreenState extends State<ScanScreen> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(height: 10.0),
                     Text('Please scan the following Locations:',

@@ -20,7 +20,6 @@ class DashBoardScreen extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                _auth.signOut();
                 Get.back();
               },
               child: Text('Cancel'),

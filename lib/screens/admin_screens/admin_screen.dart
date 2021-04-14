@@ -2,11 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'location_history_screen.dart';
-import 'login_screen.dart';
+import 'package:alba_security/screens/user_screens/location_history_screen.dart';
+import 'package:alba_security/screens/login_screen.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alba_security/constants.dart';
+import 'package:get/get.dart';
 
 final _auth = FirebaseAuth.instance;
 final _db = FirebaseFirestore.instance;
@@ -83,13 +84,13 @@ class _AdminScreenState extends State<AdminScreen> {
                   height: 5.0,
                 ),
                 Text(
-                  'Hi, Admin',
+                  'hi_admin'.tr,
                   style: GoogleFonts.roboto(
                       fontSize: 30.0, fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: 40.0),
                 Text(
-                  'Scan History:',
+                  'admin_scan_history'.tr,
                   style: GoogleFonts.roboto(fontSize: 20.0),
                 ),
                 Container(
@@ -170,7 +171,6 @@ class LocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 50.0),
-      height: 40.0,
       width: 200.0,
       child: Card(
         elevation: 5.0,
@@ -178,9 +178,9 @@ class LocationCard extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -192,15 +192,16 @@ class LocationCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: Icon(Icons.arrow_right),
+                  child: Icon(Icons.info),
                 ),
               ],
             ),
-            SizedBox(height: 5.0),
+            SizedBox(height: 10.0),
             Text(
-              ' last scan:',
+              'admin_last_scan'.tr,
               style: TextStyle(fontSize: 15.0, color: Colors.grey),
             ),
+            SizedBox(height: 7.0),
             Container(
               width: 100.0,
               height: 50.0,
@@ -229,7 +230,7 @@ class LocationCard extends StatelessWidget {
                   return lastScannedTime.isNotEmpty
                       ? Text(
                           '${DateFormat.yMMMMd().add_jm().format(lastScannedTime[0])}',
-                          style: TextStyle(fontSize: 15.0),
+                          style: TextStyle(fontSize: 15.0, color: Colors.blue),
                         )
                       : Text('Unknown', style: TextStyle(fontSize: 15.0));
                 },

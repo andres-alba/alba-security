@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alba_security/controllers/DropdownController.dart';
 import 'package:alba_security/constants.dart';
-import 'login_screen.dart';
+import 'package:alba_security/screens/login_screen.dart';
 
 final _auth = FirebaseAuth.instance;
 

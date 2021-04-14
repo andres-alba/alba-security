@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'admin_bottom_nav.dart';
-import 'bottom_nav.dart';
-import 'login_screen.dart';
+import 'package:alba_security/screens/admin_screens/admin_bottom_nav.dart';
+import 'package:alba_security/screens/user_screens/bottom_nav.dart';
+import 'package:alba_security/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'admin_screen.dart';
+import 'package:alba_security/screens/admin_screens/admin_screen.dart';
 
 int index = 0;
 

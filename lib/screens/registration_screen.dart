@@ -3,7 +3,7 @@ import 'package:alba_security/components/rounded_button.dart';
 import 'package:alba_security/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:alba_security/screens/home.dart';
+import 'package:alba_security/screens/user_screens/home.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';

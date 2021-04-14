@@ -1,10 +1,10 @@
-import 'package:alba_security/screens/scan_screen.dart';
+import 'package:alba_security/screens/user_screens/scan_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:alba_security/constants.dart';
 import 'package:get/get.dart';
 import 'package:alba_security/controllers/GridController.dart';
-import 'login_screen.dart';
+import 'package:alba_security/screens/login_screen.dart';
 import 'package:torch_compat/torch_compat.dart';
 
 final _auth = FirebaseAuth.instance;

@@ -4,7 +4,6 @@ class AppTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
-          'hi': 'Hi',
           'welcome_text': 'Security Guard',
           'welcome_button': 'Log In',
           'back_button_alert': 'Do you really want to exit',
@@ -32,9 +31,11 @@ class AppTranslations extends Translations {
           'admin_bottomnav_create': 'Locations',
           'admin_bottomnav_clock': 'Time Clock',
           'admin_bottomnav_settings': 'Settings',
+          'hi_admin': 'Hi Admin',
+          'admin_scan_history': 'Security Route History:',
+          'admin_last_scan': 'last scan:',
         },
         'es_CO': {
-          'hi': 'Hola',
           'welcome_text': 'Vigilante de Seguridad',
           'welcome_button': 'Iniciar',
           'back_button_alert': 'En serio quieres salirte? ',
@@ -62,6 +63,9 @@ class AppTranslations extends Translations {
           'admin_bottomnav_create': 'Ubicaciones',
           'admin_bottomnav_clock': 'Reloj',
           'admin_bottomnav_settings': 'Configuracion',
+          'hi_admin': 'Hola, Administrador',
+          'admin_scan_history': 'Historia de Rutas de Vigilancia:',
+          'admin_last_scan': 'Ultimo Scan:',
         }
       };
 }

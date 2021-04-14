@@ -1,12 +1,12 @@
-import 'package:alba_security/screens/time_screen.dart';
+import 'package:alba_security/screens/user_screens/time_screen.dart';
+import 'package:alba_security/screens/user_screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alba_security/controllers/HomeController.dart';
-import 'admin_create_location.dart';
-import 'admin_screen.dart';
-import 'admin_settings.dart';
+import 'dashboard_screen.dart';
+import 'scan_screen.dart';
 
-class AdminBottomNav extends StatelessWidget {
+class BottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (controller) {
@@ -15,10 +15,10 @@ class AdminBottomNav extends StatelessWidget {
           child: IndexedStack(
             index: controller.tabIndex,
             children: [
-              AdminScreen(),
-              AdminLocations(),
+              DashBoardScreen(),
+              ScanScreen(),
               TimeScreen(),
-              AdminSettings(),
+              SettingsScreen(),
             ],
           ),
         ),
@@ -33,19 +33,19 @@ class AdminBottomNav extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'admin_bottomnav_home'.tr,
+              label: 'bottomnav_home'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.qr_code_scanner),
-              label: 'admin_bottomnav_create'.tr,
+              label: 'bottomnav_scan'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.lock_clock),
-              label: 'admin_bottomnav_clock'.tr,
+              label: 'bottomnav_clock'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: 'admin_bottomnav_settings'.tr,
+              label: 'bottomnav_settings'.tr,
             ),
           ],
         ),

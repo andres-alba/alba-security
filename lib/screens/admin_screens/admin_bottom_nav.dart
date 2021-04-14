@@ -1,12 +1,12 @@
-import 'package:alba_security/screens/time_screen.dart';
-import 'package:alba_security/screens/settings_screen.dart';
+import 'package:alba_security/screens/user_screens/time_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alba_security/controllers/HomeController.dart';
-import 'dashboard_screen.dart';
-import 'scan_screen.dart';
+import 'package:alba_security/screens/admin_screens/admin_create_location.dart';
+import 'package:alba_security/screens/admin_screens/admin_screen.dart';
+import 'package:alba_security/screens/admin_screens/admin_settings.dart';
 
-class BottomNav extends StatelessWidget {
+class AdminBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (controller) {
@@ -15,10 +15,10 @@ class BottomNav extends StatelessWidget {
           child: IndexedStack(
             index: controller.tabIndex,
             children: [
-              DashBoardScreen(),
-              ScanScreen(),
+              AdminScreen(),
+              AdminLocations(),
               TimeScreen(),
-              SettingsScreen(),
+              AdminSettings(),
             ],
           ),
         ),
@@ -33,19 +33,19 @@ class BottomNav extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'bottomnav_home'.tr,
+              label: 'admin_bottomnav_home'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.qr_code_scanner),
-              label: 'bottomnav_scan'.tr,
+              label: 'admin_bottomnav_create'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.lock_clock),
-              label: 'bottomnav_clock'.tr,
+              label: 'admin_bottomnav_clock'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: 'bottomnav_settings'.tr,
+              label: 'admin_bottomnav_settings'.tr,
             ),
           ],
         ),

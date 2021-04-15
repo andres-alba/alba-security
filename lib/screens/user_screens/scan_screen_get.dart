@@ -1,13 +1,5 @@
 import 'package:alba_security/controllers/ScanController.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:async';
-import 'package:barcode_scan/barcode_scan.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alba_security/constants.dart';
 import 'package:get/get.dart';
@@ -15,75 +7,6 @@ import 'package:get/get.dart';
 class ScanScreenGet extends StatelessWidget {
   final scanController = Get.find<ScanController>();
   static const String id = 'scan_screen';
-
-  final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
-
-  String timeFormat;
-  List scannedLocation = [];
-  int selectedValue = 1;
-  //String displayName = "";
-
-//
-//  getAddressBasedOnLocation() async {
-//    final coordinates =
-//        new Coordinates(double.parse(latitude), double.parse(longitude));
-//
-//    var addresses =
-//        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-//
-//    address = addresses.first.addressLine;
-//  }
-
-  String result = "Hey there !";
-  String locationOneWalkTimeOne = '02:00 AM';
-  String locationOneWalkTimeTwo = '02:10 AM';
-
-  // QR Scan
-  Future _scanQR() async {
-    try {
-      // QR data
-      String qrResult = await BarcodeScanner.scan();
-
-      // String location to be outputted onto screen
-      String locationOneTime;
-
-      // Current date and time
-      final now = DateTime.now();
-      timeFormat = DateFormat('hh:mm a').format(now);
-      scanController.getCurrentLocation();
-
-      scanController.getAddressBasedOnLocation();
-
-      locationOneTime =
-          '$qrResult scanned at $timeFormat in ${scanController.address}';
-      print(locationOneTime);
-      scannedLocation.add(locationOneTime);
-
-      scanController.setSnackBar("Notification", "Scan Successful");
-
-      result = qrResult;
-      _firestore.collection('messages').add({
-        'user': _auth.currentUser.email,
-        'location': result,
-        'timestamp': FieldValue.serverTimestamp(),
-        'coordinates':
-            '${scanController.latitude}: ${scanController.longitude}',
-        'address': '${scanController.address}',
-      });
-    } on PlatformException catch (ex) {
-      if (ex.code == BarcodeScanner.CameraAccessDenied) {
-        scanController.setSnackBar("Hello", "Camera permission was denied");
-      } else {
-        scanController.setSnackBar("Hello", "Unknown error $ex");
-      }
-    } on FormatException {
-      scanController.setSnackBar(
-          "Hello", "You pressed the back button before scanning anything");
-    } catch (ex) {
-      scanController.setSnackBar("Hello", "Unknown Error $ex");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +36,7 @@ class ScanScreenGet extends StatelessWidget {
                       fontSize: 30.0, fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  ' ${scanController.userName}',
+                  ', ${scanController.userName}',
                   style: GoogleFonts.roboto(
                       fontSize: 30.0, fontWeight: FontWeight.w500),
                 ),
@@ -146,24 +69,13 @@ class ScanScreenGet extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: scannedLocation.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text('${scannedLocation[index]}'),
-                    );
-                  }),
-            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.camera_alt),
         label: Text("Scan"),
-        onPressed: _scanQR,
+        onPressed: scanController.scanQR,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

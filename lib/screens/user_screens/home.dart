@@ -4,7 +4,6 @@ import 'package:alba_security/screens/admin_screens/admin_bottom_nav.dart';
 import 'package:alba_security/screens/user_screens/bottom_nav.dart';
 import 'package:alba_security/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:alba_security/screens/admin_screens/admin_screen.dart';
 
 int index = 0;
 

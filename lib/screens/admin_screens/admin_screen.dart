@@ -115,8 +115,8 @@ class _AdminScreenState extends State<AdminScreen> {
                       // for every document inside all documents
                       for (var message in messages) {
                         //print(message.data());
-                        final location = message.data()['location'];
-                        final user = message.data()['user'];
+//                        final location = message.data()['location'];
+//                        final user = message.data()['user'];
                         final scannedTime =
                             message.data()['timestamp'].toDate();
                         lastScannedTime.add(scannedTime);

@@ -1,4 +1,4 @@
-import 'package:alba_security/screens/user_screens/scan_screen.dart';
+import 'package:alba_security/screens/user_screens/scan_screen_get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:alba_security/constants.dart';
@@ -58,9 +58,9 @@ class DashBoardScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           DashBoardWidget(Icons.qr_code_scanner,
-                              'dashboard_scan'.tr, ScanScreen()),
+                              'dashboard_scan'.tr, ScanScreenGet()),
                           DashBoardWidget(Icons.computer, 'dashboard_watch'.tr,
-                              ScanScreen()),
+                              ScanScreenGet()),
                           RawMaterialButton(
                             onPressed: () async {
                               if (controller.isFlashOn) {
@@ -119,11 +119,11 @@ class DashBoardScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           DashBoardWidget(Icons.calendar_today,
-                              'dashboard_schedule'.tr, ScanScreen()),
+                              'dashboard_schedule'.tr, ScanScreenGet()),
                           DashBoardWidget(Icons.policy, 'dashboard_policy'.tr,
-                              ScanScreen()),
+                              ScanScreenGet()),
                           DashBoardWidget(Icons.report, 'dashboard_reports'.tr,
-                              ScanScreen()),
+                              ScanScreenGet()),
                         ],
                       ),
                     ],

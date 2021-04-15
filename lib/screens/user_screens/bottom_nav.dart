@@ -1,3 +1,4 @@
+import 'package:alba_security/screens/user_screens/scan_screen_get.dart';
 import 'package:alba_security/screens/user_screens/time_screen.dart';
 import 'package:alba_security/screens/user_screens/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class BottomNav extends StatelessWidget {
             index: controller.tabIndex,
             children: [
               DashBoardScreen(),
-              ScanScreen(),
+              ScanScreenGet(),
               TimeScreen(),
               SettingsScreen(),
             ],

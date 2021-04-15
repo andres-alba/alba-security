@@ -56,9 +56,6 @@ class LocationHistoryScreen extends StatelessWidget {
                   final scannedTime = message.data()['timestamp'].toDate();
 
                   final approved = message.data()['approved'];
-                  final formatScannedTime = DateTime(
-                      scannedTime.year, scannedTime.month, scannedTime.day);
-                  final today = DateTime(now.year, now.month, now.day);
 
                   final formattedDate =
                       DateFormat.yMMMMd().add_jm().format(scannedTime);

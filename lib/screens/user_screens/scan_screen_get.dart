@@ -1,3 +1,4 @@
+import 'package:alba_security/controllers/ScanController.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,39 +6,30 @@ import 'dart:async';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:alba_security/components/alert_message.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:alba_security/constants.dart';
 import 'package:get/get.dart';
 
-class ScanScreen extends StatefulWidget {
+class ScanScreenGet extends StatelessWidget {
+  final scanController = Get.find<ScanController>();
   static const String id = 'scan_screen';
-  @override
-  _ScanScreenState createState() => _ScanScreenState();
-}
 
-class _ScanScreenState extends State<ScanScreen> {
+  //scanController.getUserDisplayName();
+
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+
   String timeFormat;
   List scannedLocation = [];
-  bool scannedOnTime = false;
   int selectedValue = 1;
-  String displayName = "";
+  //String displayName = "";
 
   // Geolocator points
   String latitude = "";
   String longitude = "";
   String address = "";
-
-  @override
-  void initState() {
-    super.initState();
-    _getUserDisplayName();
-    getAddressBasedOnLocation();
-  }
 
   // Get current location
   getCurrentLocation() async {
@@ -45,10 +37,8 @@ class _ScanScreenState extends State<ScanScreen> {
       final position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-      setState(() {
-        latitude = '${position.latitude}';
-        longitude = '${position.longitude}';
-      });
+      latitude = '${position.latitude}';
+      longitude = '${position.longitude}';
     } catch (e) {
       print(e);
     }
@@ -60,9 +50,8 @@ class _ScanScreenState extends State<ScanScreen> {
 
     var addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    setState(() {
-      address = addresses.first.addressLine;
-    });
+
+    address = addresses.first.addressLine;
   }
 
   String result = "Hey there !";
@@ -88,49 +77,30 @@ class _ScanScreenState extends State<ScanScreen> {
       locationOneTime = '$qrResult scanned at $timeFormat in $address}';
       scannedLocation.add(locationOneTime);
 
-      setState(() {
-        result = qrResult;
-        _firestore.collection('messages').add({
-          'user': _auth.currentUser.email,
-          'location': result,
-          'timestamp': FieldValue.serverTimestamp(),
-          'approved': scannedOnTime.toString(),
-        });
+      Get.snackbar("Notification", "Scan Successful");
+      result = qrResult;
+      _firestore.collection('messages').add({
+        'user': _auth.currentUser.email,
+        'location': result,
+        'timestamp': FieldValue.serverTimestamp(),
       });
-      scanAlert(context, locationOneTime);
     } on PlatformException catch (ex) {
       if (ex.code == BarcodeScanner.CameraAccessDenied) {
-        scanAlert(context, 'Camera permission was denied');
-//        setState(() {
-//          result = "Camera permission was denied";
-//        });
+        Get.snackbar("Notification", "Camera permission was denied");
       } else {
-        setState(() {
-          result = "Unknown Error $ex";
-        });
+        Get.snackbar("Notification", "Unknown error $ex");
       }
     } on FormatException {
-      setState(() {
-        result = "You pressed the back button before scanning anything";
-      });
+      Get.snackbar("Notification",
+          "You pressed the back button before scanning anything");
     } catch (ex) {
-      setState(() {
-        result = "Unknown Error $ex";
-      });
+      Get.snackbar("Notification", "Unknown Error $ex");
     }
-  }
-
-  //grab user displayname from firestore 'displaName'
-
-  void _getUserDisplayName() async {
-    final snapshot =
-        await _firestore.collection('users').doc(_auth.currentUser.uid).get();
-    displayName = snapshot.data()['displayName'];
-    print(displayName);
   }
 
   @override
   Widget build(BuildContext context) {
+    scanController.setName();
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
@@ -149,7 +119,7 @@ class _ScanScreenState extends State<ScanScreen> {
               height: 5.0,
             ),
             Text(
-              'Hi, $displayName',
+              'Hi, ${scanController.userName}',
               style: GoogleFonts.roboto(
                   fontSize: 30.0, fontWeight: FontWeight.w500),
             ),

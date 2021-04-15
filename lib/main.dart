@@ -1,8 +1,8 @@
+import 'package:alba_security/screens/user_screens/scan_screen_get.dart';
 import 'package:flutter/material.dart';
 import 'package:alba_security/screens/welcome_screen.dart';
 import 'package:alba_security/screens/login_screen.dart';
 import 'package:alba_security/screens/registration_screen.dart';
-import 'package:alba_security/screens/user_screens/scan_screen.dart';
 import 'package:alba_security/screens/user_screens/home.dart';
 import 'package:alba_security/screens/admin_screens/admin_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
-        ScanScreen.id: (context) => ScanScreen(),
+        ScanScreenGet.id: (context) => ScanScreenGet(),
         AdminScreen.id: (context) => AdminScreen(),
       },
       theme: ThemeData(

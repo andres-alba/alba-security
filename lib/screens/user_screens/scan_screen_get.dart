@@ -118,10 +118,19 @@ class ScanScreenGet extends StatelessWidget {
             SizedBox(
               height: 5.0,
             ),
-            Text(
-              'Hi, ${scanController.userName}',
-              style: GoogleFonts.roboto(
-                  fontSize: 30.0, fontWeight: FontWeight.w500),
+            Row(
+              children: [
+                Text(
+                  'hi'.tr,
+                  style: GoogleFonts.roboto(
+                      fontSize: 30.0, fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  ' ${scanController.userName}',
+                  style: GoogleFonts.roboto(
+                      fontSize: 30.0, fontWeight: FontWeight.w500),
+                ),
+              ],
             ),
             SizedBox(height: 20.0),
             Container(
@@ -136,7 +145,7 @@ class ScanScreenGet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(height: 10.0),
-                    Text('Please scan the following Locations:',
+                    Text('scan_please_scan'.tr,
                         style: GoogleFonts.roboto(
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,

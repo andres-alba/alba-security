@@ -34,6 +34,8 @@ class AppTranslations extends Translations {
           'hi_admin': 'Hi Admin',
           'admin_scan_history': 'Security Route History:',
           'admin_last_scan': 'last scan:',
+          'scan_please_scan': 'Please scan the following Locations:',
+          'hi': 'Hi',
         },
         'es_CO': {
           'welcome_text': 'Vigilante de Seguridad',
@@ -66,6 +68,8 @@ class AppTranslations extends Translations {
           'hi_admin': 'Hola, Administrador',
           'admin_scan_history': 'Historia de Rutas de Vigilancia:',
           'admin_last_scan': 'Ultimo Scan:',
+          'scan_please_scan': 'Por favor escanea las proximas ubicaciones:',
+          'hi': 'Hola',
         }
       };
 }

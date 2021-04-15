@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alba_security/controllers/HomeController.dart';
 import 'dashboard_screen.dart';
-import 'scan_screen.dart';
 
 class BottomNav extends StatelessWidget {
   @override

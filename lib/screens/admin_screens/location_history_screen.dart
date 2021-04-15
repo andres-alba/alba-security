@@ -54,9 +54,8 @@ class LocationHistoryScreen extends StatelessWidget {
                   final location = message.data()['location'];
                   final user = message.data()['user'];
                   final scannedTime = message.data()['timestamp'].toDate();
-
                   final approved = message.data()['approved'];
-
+                  final address = message.data()['address'];
                   final formattedDate =
                       DateFormat.yMMMMd().add_jm().format(scannedTime);
 
@@ -65,6 +64,7 @@ class LocationHistoryScreen extends StatelessWidget {
                     location: location.toString(),
                     scannedTime: formattedDate,
                     approved: approved,
+                    address: address,
                   );
                   locationMessages.add(locationMessage);
                 }
@@ -88,25 +88,58 @@ class LocationMessage extends StatelessWidget {
   final String user;
   final String approved;
   final String scannedTime;
+  final String address;
 
   const LocationMessage(
-      {this.location, this.user, this.approved, this.scannedTime});
+      {this.location,
+      this.user,
+      this.approved,
+      this.scannedTime,
+      this.address});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
       children: [
-        Text(
-          '$location: ',
-          style: TextStyle(
-              fontSize: 14.0, color: Colors.green, fontWeight: FontWeight.w700),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+//            Text(
+//              '$location: ',
+//              style: TextStyle(
+//                  fontSize: 14.0,
+//                  color: Colors.red,
+//                  fontWeight: FontWeight.w700),
+//            ),
+            Text(
+              '$scannedTime',
+              style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700),
+            ),
+          ],
         ),
-        Text(
-          '$scannedTime',
-          style: TextStyle(
-              fontSize: 14.0, color: Colors.blue, fontWeight: FontWeight.w700),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+//            Text(
+//              'Address ',
+//              style: TextStyle(
+//                  fontSize: 14.0,
+//                  color: Colors.green,
+//                  fontWeight: FontWeight.w700),
+//            ),
+            Text(
+              '$address',
+              style: TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w700),
+            ),
+          ],
         ),
+        SizedBox(height: 5.0),
       ],
     );
   }

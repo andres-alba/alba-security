@@ -68,7 +68,7 @@ class AppTranslations extends Translations {
           'hi_admin': 'Hola, Administrador',
           'admin_scan_history': 'Historia de Rutas de Vigilancia:',
           'admin_last_scan': 'Ultimo Scan:',
-          'scan_please_scan': 'Por favor escanea las proximas ubicaciones:',
+          'scan_please_scan': 'Por favor escanea las ubicaciones:',
           'hi': 'Hola',
         }
       };

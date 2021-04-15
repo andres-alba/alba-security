@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:alba_security/screens/user_screens/location_history_screen.dart';
+import 'package:alba_security/screens/admin_screens/location_history_screen.dart';
 import 'package:alba_security/screens/login_screen.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';

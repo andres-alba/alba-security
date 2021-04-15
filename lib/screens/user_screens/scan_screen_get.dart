@@ -16,8 +16,6 @@ class ScanScreenGet extends StatelessWidget {
   final scanController = Get.find<ScanController>();
   static const String id = 'scan_screen';
 
-  //scanController.getUserDisplayName();
-
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
@@ -26,33 +24,16 @@ class ScanScreenGet extends StatelessWidget {
   int selectedValue = 1;
   //String displayName = "";
 
-  // Geolocator points
-  String latitude = "";
-  String longitude = "";
-  String address = "";
-
-  // Get current location
-  getCurrentLocation() async {
-    try {
-      final position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
-      latitude = '${position.latitude}';
-      longitude = '${position.longitude}';
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  getAddressBasedOnLocation() async {
-    final coordinates =
-        new Coordinates(double.parse(latitude), double.parse(longitude));
-
-    var addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-
-    address = addresses.first.addressLine;
-  }
+//
+//  getAddressBasedOnLocation() async {
+//    final coordinates =
+//        new Coordinates(double.parse(latitude), double.parse(longitude));
+//
+//    var addresses =
+//        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+//
+//    address = addresses.first.addressLine;
+//  }
 
   String result = "Hey there !";
   String locationOneWalkTimeOne = '02:00 AM';
@@ -70,31 +51,37 @@ class ScanScreenGet extends StatelessWidget {
       // Current date and time
       final now = DateTime.now();
       timeFormat = DateFormat('hh:mm a').format(now);
+      scanController.getCurrentLocation();
 
-      getCurrentLocation();
-      getAddressBasedOnLocation();
+      scanController.getAddressBasedOnLocation();
 
-      locationOneTime = '$qrResult scanned at $timeFormat in $address}';
+      locationOneTime =
+          '$qrResult scanned at $timeFormat in ${scanController.address}';
+      print(locationOneTime);
       scannedLocation.add(locationOneTime);
 
-      Get.snackbar("Notification", "Scan Successful");
+      scanController.setSnackBar("Notification", "Scan Successful");
+
       result = qrResult;
       _firestore.collection('messages').add({
         'user': _auth.currentUser.email,
         'location': result,
         'timestamp': FieldValue.serverTimestamp(),
+        'coordinates':
+            '${scanController.latitude}: ${scanController.longitude}',
+        'address': '${scanController.address}',
       });
     } on PlatformException catch (ex) {
       if (ex.code == BarcodeScanner.CameraAccessDenied) {
-        Get.snackbar("Notification", "Camera permission was denied");
+        scanController.setSnackBar("Hello", "Camera permission was denied");
       } else {
-        Get.snackbar("Notification", "Unknown error $ex");
+        scanController.setSnackBar("Hello", "Unknown error $ex");
       }
     } on FormatException {
-      Get.snackbar("Notification",
-          "You pressed the back button before scanning anything");
+      scanController.setSnackBar(
+          "Hello", "You pressed the back button before scanning anything");
     } catch (ex) {
-      Get.snackbar("Notification", "Unknown Error $ex");
+      scanController.setSnackBar("Hello", "Unknown Error $ex");
     }
   }
 
